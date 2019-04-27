@@ -1,6 +1,6 @@
 <?php
 
-define('ROOT', 'http://localhost/aprendendo_poo');
+if (!defined('ROOT')) { define('ROOT', 'http://localhost/aprendendo_poo'); }
 if(!isset($_SESSION)) { session_start() ; }
 
 class Login {
@@ -55,10 +55,10 @@ class Login {
     }
 
     public function checkLogged () {
-        if (!empty($_SESSION['user'])) {
-            $path = ROOT . '/painel';
-            header("Location: $path");
-            die();
+        if (empty($_SESSION['user'])) {
+            return false;
+        } else {
+            return true;
         }
     }
 }

@@ -1,9 +1,6 @@
 <?php
 
 include 'model/Manager.class.php';
-include 'controller/Entrar.class.php';
-
-Login::checkLogged();
 
 ?>
 

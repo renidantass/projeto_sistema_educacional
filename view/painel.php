@@ -1,8 +1,8 @@
 <?php
-    session_start();
+    if (!isset($_SESSION)) { session_start(); }
     include 'model/Manager.class.php';
     include 'controller/Notifications.class.php';
-    include 'controller/Entrar.class.php';
+    // include 'controller/Entrar.class.php';
     $Manager = new Manager();
 
 ?>

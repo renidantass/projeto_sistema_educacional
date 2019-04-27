@@ -3,6 +3,7 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use Slim\Views\PhpRenderer;
 require 'vendor/autoload.php';
+require 'middlewares/auths.php';
 
 $app = new \Slim\App([
     'settings' => [
@@ -22,7 +23,7 @@ $app->get('/inicio', function (Request $req, Response $res, array $args) {
 
 $app->get('/entrar', function (Request $req, Response $res, array $args) {
     $this->renderer->render($res, 'entrar.php');
-});
+})->add($auth_entrar);
 
 $app->get('/cadastro', function (Request $req, Response $res, array $args) {
     $this->renderer->render($res, 'cadastro.php');
@@ -38,6 +39,6 @@ $app->get('/cadastro/aluno', function (Request $req, Response $res, array $args)
 
 $app->get('/painel', function (Request $req, Response $res, array $args) {
     $this->renderer->render($res, 'painel.php');
-});
+})->add($auth_painel);
 
 $app->run();
