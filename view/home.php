@@ -48,7 +48,7 @@ $Manager = new Manager();
                     <div class="card-body">
                         <h5 class="card-title"><?=$curso['nome_curso']?></h5>
                         <p class="card-text"><?=$curso['descricao']?></p>
-                        <a href="#" class="btn btn-primary">Matricule-se</a>
+                        <a href="matricula/curso/<?=$curso['id_curso']?>" class="btn btn-primary">Matricule-se</a>
                     </div>
                 </div>
             </div>
