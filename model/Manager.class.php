@@ -67,4 +67,12 @@ class Manager extends Connection {
         $statement->execute();
         return $statement->fetch();
     }
+
+    public function getCourseDetails($id) {
+        $connection = self::instance();
+        $statement = $connection->prepare("SELECT * FROM cursos c INNER JOIN professores p ON c.id_professor=p.id_professor WHERE id_curso = :id ");
+        $statement->bindValue(":id", $id);
+        $statement->execute();
+        return $statement->fetch();
+    }
 }

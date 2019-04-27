@@ -37,8 +37,14 @@ $app->get('/cadastro/aluno', function (Request $req, Response $res, array $args)
     $this->renderer->render($res, 'c_aluno.php');
 });
 
-$app->get('/painel', function (Request $req, Response $res, array $args) {
-    $this->renderer->render($res, 'painel.php');
-})->add($auth_painel);
+$app->group('', function() use ($app) {
+    $app->get('/painel', function (Request $req, Response $res, array $args) {
+        $this->renderer->render($res, 'painel.php');
+    });
+
+    $app->get('/curso/{id}', function (Request $req, Response $res, array $args) {
+        $this->renderer->render($res, 'curso.php', ["id_curso" => $args['id']]);
+    });
+})->add($auth_default);
 
 $app->run();

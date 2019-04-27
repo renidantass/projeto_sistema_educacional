@@ -11,7 +11,7 @@ $auth_entrar = function ($request, $response, $next) {
     return $response;
 };
 
-$auth_painel = function ($request, $response, $next) {
+$auth_default = function ($request, $response, $next) {
     if (Login::checkLogged() === true) {
         $next($request, $response);
     } else {
