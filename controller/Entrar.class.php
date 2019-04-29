@@ -9,6 +9,7 @@ class Login {
     private $email;
     private $password;
     private $Manager;
+    private $admin;
 
     public function __construct (array $data) {
         $this->Manager = new Manager();
@@ -27,22 +28,41 @@ class Login {
             'name' => $this->name,
             'email' => $this->email,
             'senha' => $this->password,
+            'elevation' => $this->admin
         ];
     }
 
     private function entrar ($data) {
         $data_database = $this->Manager->loginTeacher($data);
-        if (password_verify($this->password, $data_database['senha'])) {
-            $this->id = $data_database['id_professor'];
-            $this->name = $data_database['nome_professor'];
-            $this->createSession();
-            $path = ROOT . '/painel';
-            header("Location: $path");
-            die();
+        if ($data_database !== false) {
+            if (password_verify($this->password, $data_database['senha'])) {
+                $this->id = $data_database['id_professor'];
+                $this->name = $data_database['nome_professor'];
+                $this->admin = true;
+                $this->createSession();
+                $path = ROOT . '/painel';
+                header("Location: $path");
+                die();
+            } else {
+                $path = ROOT . '/';
+                header("Location: $path");
+                die();
+            }
         } else {
-            $path = ROOT . '/';
-            header("Location: $path");
-            die();
+            $data_database = $this->Manager->loginStudent($data);
+            if (password_verify($this->password, $data_database['senha'])) {
+                $this->id = $data_database['id_aluno'];
+                $this->name = $data_database['nome_aluno'];
+                $this->admin = false;
+                $this->createSession();
+                $path = ROOT . '/painel';
+                header("Location: $path");
+                die();
+            } else {
+                $path = ROOT . '/';
+                header("Location: $path");
+                die();
+            }
         }
     }
 
@@ -60,5 +80,9 @@ class Login {
         } else {
             return true;
         }
+    }
+
+    public static function getElevation () {
+        return $_SESSION['user']['elevation'];
     }
 }

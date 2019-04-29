@@ -68,6 +68,15 @@ class Manager extends Connection {
         return $statement->fetch();
     }
 
+    public function loginStudent ($data) {
+        $connection = self::instance();
+        $email = $data['email'];
+        $statement = $connection->prepare("SELECT * FROM alunos WHERE email = :email");
+        $statement->bindValue(':email', $email);
+        $statement->execute();
+        return $statement->fetch();
+    }
+
     public function getCourseDetails($id) {
         $connection = self::instance();
         $statement = $connection->prepare("SELECT * FROM cursos c INNER JOIN professores p ON c.id_professor=p.id_professor WHERE id_curso = :id ");
